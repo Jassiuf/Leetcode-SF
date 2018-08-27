@@ -1,0 +1,46 @@
+/*
+ 
+create dummy node to handle null cases
+A Pointer to keep track of sum nodes as we traverse both lists
+Look at both lists, if there is a node add that to the sum else add 0
+Carry is this addition divided by 10
+Sum is this number modulo 10, and create a sum node and progress the pointer by one step
+Clever trick is to set the sum to previous carry at the beginning of the iteration
+
+Space = Proportional to number of elements in the resultant list which can be one larger than the longer list so Max(l1.size, l2.size) + 1
+Time  = Proportional to number of elements in the larger linked list, same as above
+
+*/
+
+
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(-1);
+        ListNode p = dummy;
+        int sum = 0, carry = 0;
+        
+        while (l1 != null || l2 != null) {
+            sum = carry;
+            
+            if (l1 != null) {
+                sum += l1.val;
+                l1 = l1.next;
+            }
+            
+            if (l2 != null) {
+                sum += l2.val;
+                l2 = l2.next;
+            }
+            
+            carry = sum/10;
+            ListNode node = new ListNode(sum % 10);
+            p.next = node;
+            p = p.next;
+        }
+        
+        if (carry != 0) {
+            p.next = new ListNode(1);
+        }
+        return dummy.next;
+    }
+}
