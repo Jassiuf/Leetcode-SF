@@ -1,0 +1,37 @@
+class Solution {
+    
+    public int search(int[] a, int target) {
+      int p1 = 0, p2 = a.length - 1;
+      // search terminates if p1 > p2
+      while (p1 <= p2) {
+          int partition = p1 + (p2 - p1)/2;
+          int mid = a[partition];
+          // successful termination
+          if (mid == target) {
+              return partition;
+          
+          }  // Left subarray is sorted
+          else if (a[p1] <= a[partition]) { 
+              // target lies in left subarray
+              if (a[p1] <= target && target <= a[partition]) {
+                  p2 = partition - 1;
+              } // target lies in right subarray 
+               else {
+                   p1 = partition + 1;
+               }
+          } // if right subarray is sorted
+           else {
+               if (a[partition] <= target && target <= a[p2]) {
+                  p1 = partition + 1;
+              } // target lies in left subarray 
+               else {
+                   p2 = partition - 1;
+               }
+           }
+      }
+        //unsuccessful search
+        return -1;
+    }
+    
+  
+}

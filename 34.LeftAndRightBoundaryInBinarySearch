@@ -1,0 +1,32 @@
+class Solution {
+    
+    public int[] searchRange(int[] n, int target) {
+        int start = 0, end = n.length - 1;        
+        int[] res = new int[2];
+        Arrays.fill(res, -1);
+        if (n.length == 0)    return res;
+        while (start != end) {
+            int mid = start + (end - start)/2;
+            if (target > n[mid])
+                start = mid + 1;
+            else 
+                end = mid;
+        }
+        if (n[start] != target) return res;
+        res[0] = start;
+       
+        end = n.length - 1;
+        while (start != end) {
+            int mid =  1+ (start + (end - start)/2);
+            if (target < n[mid])
+                end = mid - 1;
+            else {
+                System.out.print(start);
+                start = mid;
+            }
+                
+        }
+        res[1] = target == n[start] ? start :start - 1;
+        return res;
+    }
+}
