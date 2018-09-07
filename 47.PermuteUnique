@@ -1,0 +1,28 @@
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new LinkedList<>();
+        backtrack(nums, res, 0, nums.length);
+        return res;
+    }
+    
+    public void backtrack(int[] nums, List<List<Integer>> res, int index, int size) {
+        if (index == size) {
+            res.add(Arrays.stream(nums).boxed().collect(Collectors.toList()));
+            return;
+        }
+        for (int j = index; j < size; j++) {
+            //choose
+            swap(nums, index, j);
+            //explore
+            backtrack(nums, res, index + 1, size);
+            //unchoose
+            swap(nums, index, j);
+        }
+    }
+    
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+}
